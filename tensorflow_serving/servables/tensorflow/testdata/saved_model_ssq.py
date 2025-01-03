@@ -32,4 +32,5 @@ class SSQModel(tf.Module):
 
 if __name__ == "__main__":
     ssq = SSQModel()
-    tf.saved_model.save(ssq, f"./saved_model_{ssq.name}")
+    version = "1"
+    tf.saved_model.save(ssq, f"./saved_model_{ssq.name}/{version}")
