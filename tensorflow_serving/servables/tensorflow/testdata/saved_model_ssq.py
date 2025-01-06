@@ -17,6 +17,7 @@ class SSQModel(tf.Module):
         r1_max = self.r1_max
         # Convert inputs to tensors if they are not already
         r1_max = tf.cast(r1_max, dtype=tf.int32)
+        r1 = tf.cast(r1, dtype=tf.int32)
 
         # Define a conditional operation for checking r1 < r1_max
         def true_fn():
