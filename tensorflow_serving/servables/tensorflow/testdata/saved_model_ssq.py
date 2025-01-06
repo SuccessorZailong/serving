@@ -15,18 +15,14 @@ class SSQModel(tf.Module):
     def gen_red(self, r1):
         """gen_red on history distribution"""
         r1_max = self.r1_max
-        # Convert inputs to tensors if they are not already
-        r1_max = tf.cast(r1_max, dtype=tf.int32)
-        r1 = tf.cast(r1, dtype=tf.int32)
+        r1 = tf.squeeze(r1)
+        r1_max = tf.squeeze(r1_max)
 
-        # Define a conditional operation for checking r1 < r1_max
-        def true_fn():
-            return r1
-
-        def false_fn():
-            return tf.random.uniform(shape=[], minval=0, maxval=17, dtype=tf.int32)
-
-        r1 = tf.cond(r1 < r1_max, true_fn, false_fn)
+        r1 = tf.cond(
+            pred=r1 < r1_max,
+            true_fn=lambda: r1,
+            false_fn=lambda: tf.random.uniform(shape=[], minval=0, maxval=17, dtype=tf.int32)
+        )
 
         # Use tf.random.uniform for generating random integers within specified ranges
         r2 = tf.random.uniform(shape=[], minval=r1 + 1, maxval=24, dtype=tf.int32)
